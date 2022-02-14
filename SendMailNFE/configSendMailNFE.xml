@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SendMailNFE>
+	<ConfigSQL>
+		<Server>commarc-note\sqlexpress</Server>
+		<DataBaseNF>db_vendas</DataBaseNF>
+		<TableNF>tb_notafiscal</TableNF>
+		<ColumnIdNF>cdnotafiscal</ColumnIdNF>
+		<ColumnIdClienteNF>cdcliente_fk</ColumnIdClienteNF>
+		<DataBaseCliente>db_clientes</DataBaseCliente>
+		<TableCliente>tb_cliente</TableCliente>
+		<ColumnIdCliente>cdcliente</ColumnIdCliente>
+		<ColumnTextCliente>nmrazaosocial</ColumnTextCliente>
+		<ColumnEmailCliente>dsemail</ColumnEmailCliente>
+	</ConfigSQL>
+	<ConfigXML>
+		<PathSource>C:\NFE\XML\</PathSource>
+		<PathXML>/nfeProc/NFe/infNFe/ide/</PathXML>
+		<TagNrNFE>nNF</TagNrNFE>
+		<TagDtEmissao>dEmi</TagDtEmissao>
+    <TagDtHrEmissao>dhEmi</TagDtHrEmissao>
+		<TagNmCliente>../dest/xNome</TagNmCliente>
+    <TagIdNFE>../@Id</TagIdNFE>
+		<TagValidaEmail>../infAdic/obsCont/@xCampo</TagValidaEmail>
+		<TagEmailCliente>EMAIL_NFE_XML</TagEmailCliente>
+		<!--TagPathEmailCliente>../infAdic/obsCont/xTexto</TagPathEmailCliente-->
+    <TagPathEmailCliente>../dest/email</TagPathEmailCliente>
+		<MailSubject>Envio de arquivo NFE</MailSubject>
+		<MailBody>Prezado Cliente, este e-mail refere-se a Nota Fiscal Eletrônica emitida pela ...</MailBody>
+		<MailServer>smtp.terra.com.br</MailServer>
+		<MailUser>francielle@thathipolimeros.com.br</MailUser>
+		<MailPassword>d04m04</MailPassword>
+		<MailFrom>francielle@thathipolimeros.com.br</MailFrom>
+		<MailCC1></MailCC1>
+		<MailCC2></MailCC2>
+    <MailPort>587</MailPort>
+    <PathTemplateNFE>C:\NFE\DOC\NFETools_Template.docx</PathTemplateNFE>
+    <NFE3>
+      <PathXML>/nfeProc/NFe/infNFe/</PathXML>
+      <nNF Path="ide/nNF">000.000.000</nNF>
+      <chaveAcessoNFE Path="@Id">CHAVE_ACESSO</chaveAcessoNFE>
+      <serie Path="ide/serie">SERIE_NFE</serie>
+      <natOp Path="ide/natOp">NATUREZA_OPERACAO</natOp>
+      <EmitenteNFE Path="emit/xNome">EMITENTE_NFE</EmitenteNFE>
+      <CNPJCPFEmitente Path="emit/CNPJ">CNPJ_CPF_EMITENTE</CNPJCPFEmitente>
+      <IEEmitente Path="emit/IE">IE_EMITENTE</IEEmitente>
+      <DataEmissao Path="ide/dhEmi">DATA_EMISSAO</DataEmissao>
+      <RazaoSocialCliente Path="dest/xNome">RAZAO_SOCIAL_CLIENTE</RazaoSocialCliente>
+      <CNPJCPFCliente Path="dest/CNPJ">CNPJ_CPF_CLIENTE</CNPJCPFCliente>
+      <IECliente Path="dest/IE">IE_CLIENTE</IECliente>
+      <EnderecoCliente Path="dest/enderDest/xLgr">ENDERECO_CLIENTE</EnderecoCliente>
+      <NroEnderecoCliente Path="dest/enderDest/nro">NRO_END_CLIENTE</NroEnderecoCliente>
+      <BairroCliente Path="dest/enderDest/xBairro">BAIRRO_CLIENTE</BairroCliente>
+      <CEPCliente Path="dest/enderDest/CEP">CEP_CLIENTE</CEPCliente>
+      <MunicipioCliente Path="dest/enderDest/xMun">MUNICIPIO_CLIENTE</MunicipioCliente>
+      <UFCliente Path="dest/enderDest/UF">UF_CLIENTE</UFCliente>
+      <TelefoneCliente Path="dest/enderDest/fone">TELEFONE_CLIENTE</TelefoneCliente>
+    </NFE3>
+	</ConfigXML>
+</SendMailNFE>
