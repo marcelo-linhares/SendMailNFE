@@ -13,10 +13,11 @@
 		<ColumnEmailCliente>dsemail</ColumnEmailCliente>
 	</ConfigSQL>
 	<ConfigXML>
-		<PathSource>C:\NFE\XML\</PathSource>
-		<PathXML>/nfeProc/NFe/infNFe/ide/</PathXML>
+		<PathSource>C:\NFE\Losinox\notas_xml\notas_xml\</PathSource>
+    <!--PathXML>/nfeProc/NFe/infNFe/ide/</PathXML-->
+    <PathXML>/NFe/infNFe/ide/</PathXML>
 		<TagNrNFE>nNF</TagNrNFE>
-		<TagDtEmissao>dEmi</TagDtEmissao>
+		<TagDtEmissao>dhEmi</TagDtEmissao>
     <TagDtHrEmissao>dhEmi</TagDtHrEmissao>
 		<TagNmCliente>../dest/xNome</TagNmCliente>
     <TagIdNFE>../@Id</TagIdNFE>
@@ -33,7 +34,7 @@
 		<MailCC1></MailCC1>
 		<MailCC2></MailCC2>
     <MailPort>587</MailPort>
-    <PathTemplateNFE>C:\NFE\DOC\NFETools_Template.docx</PathTemplateNFE>
+    <PathTemplateNFE>C:\NFE\Losinox\DOC\NFETools_Template.docx</PathTemplateNFE>
     <NFE3>
       <PathXML>/nfeProc/NFe/infNFe/</PathXML>
       <nNF Path="ide/nNF">000.000.000</nNF>

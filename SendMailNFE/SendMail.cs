@@ -91,7 +91,8 @@ namespace SendMailNFE
                     oDR["FileName"] = oFI.Name;
                     oDR["NF"] = xmlDoc.SelectSingleNode(configSM.ConfigXML.PathXML + configSM.ConfigXML.TagNrNFE).InnerText;
                     oDR["NomeCliente"] = xmlDoc.SelectSingleNode(configSM.ConfigXML.PathXML + configSM.ConfigXML.TagNmCliente).InnerText;
-                    if (xmlDoc.SelectSingleNode(configSM.ConfigXML.PathXML + "../../../@versao").InnerText.Substring(0,1).Equals("3"))
+                    //if (xmlDoc.SelectSingleNode(configSM.ConfigXML.PathXML + "../../../@versao").InnerText.Substring(0,1).Equals("3"))
+                    if (xmlDoc.SelectSingleNode(configSM.ConfigXML.PathXML + "../@versao").InnerText.Substring(0,1).Equals("3"))
                         oDR["DtEmissao"] = xmlDoc.SelectSingleNode(configSM.ConfigXML.PathXML + configSM.ConfigXML.TagDtHrEmissao).InnerText;
                     else
                         oDR["DtEmissao"] = xmlDoc.SelectSingleNode(configSM.ConfigXML.PathXML + configSM.ConfigXML.TagDtEmissao).InnerText;
@@ -519,7 +520,7 @@ namespace SendMailNFE
                         String fileName = configSM.ConfigXML.PathSource + dr.Cells[1].Value.ToString();
                         String[] nomeCliente = dr.Cells[4].Value.ToString().Split(' ');
 
-                        x.GenerateReport(fileName, configSM.ConfigXML.ConfigXMLNFE, configSM.ConfigXML.PathXML.Replace("/ide", ""), @"C:\NFE\DOC\" + Common.PrepareFileNameNFE(dr.Cells[2].Value.ToString(), nomeCliente[0]), configSM.ConfigXML.PathTemplateNFE);
+                        x.GenerateReport(fileName, configSM.ConfigXML.ConfigXMLNFE, configSM.ConfigXML.PathXML.Replace("/ide", ""), @"C:\NFE\Losinox\DOC\" + Common.PrepareFileNameNFE(dr.Cells[2].Value.ToString(), nomeCliente[0]), configSM.ConfigXML.PathTemplateNFE);
                     }
                 }
             }

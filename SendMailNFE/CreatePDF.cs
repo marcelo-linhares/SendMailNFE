@@ -35,7 +35,7 @@ namespace SendMailNFE
 
             oSR.Close();
             
-            if (TransformNFEDOC(FileNameTemplate, FileNameDest.Insert(FileNameDest.Length, ".docx"), dicFinal))
+            if (TransformNFEDOC(FileNameTemplate, FileNameDest.Insert(FileNameDest.Length, ".docx"), dicFinal, FileNameXML))
             {
                 return;
             }
@@ -43,13 +43,34 @@ namespace SendMailNFE
 
         }
 
-        private Boolean TransformNFEDOC(string templateDoc, string FileName, Dictionary<string, string> Dic)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="templateDoc"></param>
+        /// <param name="FileName"></param>
+        /// <param name="Dic"></param>
+        /// <returns></returns>
+        /// <refCopyRight>https://stackoverflow.com/questions/50117531/generate-a-word-document-docx-using-data-from-an-xml-file-convert-xml-to-a-w</refCopyRight>
+        private Boolean TransformNFEDOC(string templateDoc, string FileName, Dictionary<string, string> Dic, string xmlDataFile)
         {
             File.Copy(templateDoc, FileName, true);
 
             using (WordprocessingDocument wordDoc = WordprocessingDocument.Open(FileName, true))
             {
-                string docText = null;
+                //get the main part of the document which contains CustomXMLParts
+                MainDocumentPart mainPart = wordDoc.MainDocumentPart;
+
+                //delete all CustomXMLParts in the document. If needed only specific CustomXMLParts can be deleted using the CustomXmlParts IEnumerable
+                mainPart.DeleteParts<CustomXmlPart>(mainPart.CustomXmlParts);
+
+                //add new CustomXMLPart with data from new XML file
+                CustomXmlPart myXmlPart = mainPart.AddCustomXmlPart(CustomXmlPartType.CustomXml);
+                using (FileStream stream = new FileStream(xmlDataFile, FileMode.Open))
+                {
+                    myXmlPart.FeedData(stream);
+                }
+
+                /*string docText = null;
 
                 using (StreamReader sr = new StreamReader(wordDoc.MainDocumentPart.GetStream()))
                 {
@@ -66,7 +87,7 @@ namespace SendMailNFE
                             wordDoc.MainDocumentPart.GetStream(FileMode.Create)))
                 {
                     sw.Write(docText);
-                }
+                }*/
                 
             }
 
