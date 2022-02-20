@@ -520,7 +520,7 @@ namespace SendMailNFE
                         String fileName = configSM.ConfigXML.PathSource + dr.Cells[1].Value.ToString();
                         String[] nomeCliente = dr.Cells[4].Value.ToString().Split(' ');
 
-                        x.GenerateReport(fileName, configSM.ConfigXML.ConfigXMLNFE, configSM.ConfigXML.PathXML.Replace("/ide", ""), @"C:\NFE\Losinox\DOC\" + Common.PrepareFileNameNFE(dr.Cells[2].Value.ToString(), nomeCliente[0]), configSM.ConfigXML.PathTemplateNFE);
+                        x.GenerateReport(fileName, @"C:\NFE\Losinox\DOC\" + Common.PrepareFileNameNFE(dr.Cells[2].Value.ToString(), nomeCliente[0]), configSM.ConfigXML.PathTemplateNFE);
                     }
                 }
             }

@@ -15,32 +15,17 @@ namespace SendMailNFE
     class CreatePDF
     {
 
-        public void GenerateReport(string FileNameXML, Dictionary<string, string> dicConfigXMLNFE, string MainPathXML, string FileNameDest, string FileNameTemplate)
+        public void GenerateReport(string FileNameXML, string FileNameDest, string FileNameTemplate)
         {
             StreamReader oSR = new StreamReader(FileNameXML);
             String TextXML = oSR.ReadToEnd().Replace("xmlns=\"http://www.portalfiscal.inf.br/nfe\"", "");
-            // Utilizando o xml para preecher o objeto de dados
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(TextXML);
-            Dictionary<string, string> dicFinal = new Dictionary<string, string>();
-
-            foreach (KeyValuePair<string,string> item in dicConfigXMLNFE)
-            {
-                //Incluir tratamento para tamanho, mascara, entre outros, neste campo.
-                if(xmlDoc.SelectSingleNode(MainPathXML + item.Value)!=null)
-                    dicFinal.Add(item.Key, xmlDoc.SelectSingleNode(MainPathXML + item.Value).InnerText);
-                else
-                    dicFinal.Add(item.Key, String.Empty);
-            }
-
+            
             oSR.Close();
             
-            if (TransformNFEDOC(FileNameTemplate, FileNameDest.Insert(FileNameDest.Length, ".docx"), dicFinal, FileNameXML))
+            if (TransformNFEDOC(FileNameTemplate, FileNameDest.Insert(FileNameDest.Length, ".docx"), FileNameXML))
             {
                 return;
             }
-
-
         }
 
         /// <summary>
@@ -51,7 +36,7 @@ namespace SendMailNFE
         /// <param name="Dic"></param>
         /// <returns></returns>
         /// <refCopyRight>https://stackoverflow.com/questions/50117531/generate-a-word-document-docx-using-data-from-an-xml-file-convert-xml-to-a-w</refCopyRight>
-        private Boolean TransformNFEDOC(string templateDoc, string FileName, Dictionary<string, string> Dic, string xmlDataFile)
+        private Boolean TransformNFEDOC(string templateDoc, string FileName, string xmlDataFile)
         {
             File.Copy(templateDoc, FileName, true);
 
@@ -69,25 +54,6 @@ namespace SendMailNFE
                 {
                     myXmlPart.FeedData(stream);
                 }
-
-                /*string docText = null;
-
-                using (StreamReader sr = new StreamReader(wordDoc.MainDocumentPart.GetStream()))
-                {
-                    docText = sr.ReadToEnd();
-                }
-
-                foreach (KeyValuePair<string, string> item in Dic)
-                {
-                    Regex regexText = new Regex(item.Key);
-                    docText = regexText.Replace(docText, item.Value);
-                }
-
-                using (StreamWriter sw = new StreamWriter(
-                            wordDoc.MainDocumentPart.GetStream(FileMode.Create)))
-                {
-                    sw.Write(docText);
-                }*/
                 
             }
 
