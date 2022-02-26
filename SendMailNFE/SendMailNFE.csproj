@@ -66,6 +66,7 @@
     <Compile Include="ConfigSendMailSQLData.cs" />
     <Compile Include="ConfigSendMailXMLData.cs" />
     <Compile Include="CreatePDF.cs" />
+    <Compile Include="Data\NFE.cs" />
     <Compile Include="SendMail.cs">
       <SubType>Form</SubType>
     </Compile>

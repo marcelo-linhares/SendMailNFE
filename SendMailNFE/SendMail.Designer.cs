@@ -180,6 +180,7 @@ namespace SendMailNFE
             // 
             // btnDANFEPDF
             // 
+            this.btnDANFEPDF.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDANFEPDF.Location = new System.Drawing.Point(672, 14);
             this.btnDANFEPDF.Name = "btnDANFEPDF";
             this.btnDANFEPDF.Size = new System.Drawing.Size(85, 24);
@@ -259,6 +260,7 @@ namespace SendMailNFE
             this.MainMenuStrip = this.mnuSendMailNFE;
             this.Name = "SendMail";
             this.Text = "Send Mail NFE - ComMarc Soluções em Informática";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SendMail_FormClosing);
             this.Load += new System.EventHandler(this.SendMail_Load);
             this.mnuSendMailNFE.ResumeLayout(false);

@@ -52,6 +52,7 @@ namespace SendMailNFE
 
                 _configXML.PathSource = xmlDoc.SelectSingleNode("/SendMailNFE/ConfigXML/PathSource").InnerText;
                 _configXML.PathXML = xmlDoc.SelectSingleNode("/SendMailNFE/ConfigXML/PathXML").InnerText;
+                _configXML.PathXMLProcessado = xmlDoc.SelectSingleNode("/SendMailNFE/ConfigXML/PathXMLProcessado").InnerText;
                 _configXML.PathTemplateNFE = xmlDoc.SelectSingleNode("/SendMailNFE/ConfigXML/PathTemplateNFE").InnerText;
                 _configXML.TagNrNFE = xmlDoc.SelectSingleNode("/SendMailNFE/ConfigXML/TagNrNFE").InnerText;
                 _configXML.TagDtEmissao = xmlDoc.SelectSingleNode("/SendMailNFE/ConfigXML/TagDtEmissao").InnerText;

@@ -11,7 +11,7 @@ namespace SendMailNFE
 
         public static String PrepareFileNameNFE(String nrNFE, String nomeCliente)
         {
-            return "NFE_" + nrNFE + "_" + nomeCliente;
+            return "NFE_" + nrNFE + "_" + nomeCliente.Replace(".", "").Replace("/", "");
         }
 
     }

@@ -8,6 +8,7 @@ namespace SendMailNFE
     {
         private String _pathSource;
         private String _pathXML;
+        private String _pathXMLProcessado;
         private String _tagNrNFE;
         private String _tagDtEmissao;
         private String _tagDtHrEmissao;
@@ -38,6 +39,12 @@ namespace SendMailNFE
         {
             get { return _pathXML; }
             set { _pathXML = value; }
+        }
+
+        public String PathXMLProcessado
+        {
+            get { return _pathXMLProcessado; }
+            set { _pathXMLProcessado = value; }
         }
 
         public String TagNrNFE
