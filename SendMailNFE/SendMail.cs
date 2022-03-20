@@ -133,7 +133,7 @@ namespace SendMailNFE
 
             foreach (DataGridViewRow dr in dgvMain.Rows)
             {
-                dr.Cells[0].Value = true;
+                dr.Cells[0].Value = Common.ValidRowToCheck(dr);
             }
         }
 
@@ -194,12 +194,20 @@ namespace SendMailNFE
             }
         }
 
+        private void sobreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (AboutSendMail box = new AboutSendMail())
+            {
+                box.ShowDialog(this);
+            }
+        }
+
         #endregion
 
         #region Private Methods
-/// <summary>
-/// Deprecated
-/// </summary>
+        /// <summary>
+        /// Deprecated
+        /// </summary>
         private void listarNFE()
         {
             try
@@ -279,6 +287,7 @@ namespace SendMailNFE
                 oDT.Columns.Add("DtEmissao");
                 oDT.Columns.Add("IdNFE");
                 oDT.Columns.Add("IsProcessada");
+                oDT.Columns.Add("DANFEvalida");
 
                 foreach (FileInfo oFI in oDI.GetFiles("*.XML"))
                 {
@@ -299,6 +308,7 @@ namespace SendMailNFE
                     oDR["IdNFE"] = oNFE.codigo_NFE;
                     oDR["EmailCliente"] = oNFE.email_cliente;
                     oDR["IsProcessada"] = oNFE.indicador_NFE_processada;
+                    oDR["DANFEvalida"] = FindValidDANFEPDF(oFI.Name, _configSM.ConfigXML.PathSource, "");
 
                     oDT.Rows.Add(oDR);
 
@@ -421,10 +431,12 @@ namespace SendMailNFE
                         //dr.ReadOnly = true;
                         dr.DefaultCellStyle.ForeColor = Color.Red;
                     }
-                    if (dr.Cells["IsProcessada"].Value.ToString().Equals("False"))
+
+                    dr.ReadOnly = !Common.ValidRowToCheck(dr);
+                    /*if (dr.Cells["IsProcessada"].Value.ToString().Equals("False") || dr.Cells["DANFEvalida"].Value.ToString().Equals(String.Empty))
                     {
                         dr.ReadOnly = true;
-                    }
+                    }*/
                 }
             }
             catch (Exception ex)
@@ -454,13 +466,15 @@ namespace SendMailNFE
                             if (Convert.ToBoolean(dr.Cells[0].Value) == true)
                             {
                                 String fileName = _configSM.ConfigXML.PathSource + dr.Cells["FileName"].Value.ToString();
+                                String fileDANFE = _configSM.ConfigXML.PathSource + dr.Cells["DANFEvalida"].Value.ToString();
                                 String folderDest = dr.Cells["DtEmissao"].Value.ToString().Substring(0, 4) + "\\" + dr.Cells["DtEmissao"].Value.ToString().Substring(5, 2) + "\\";
 
                                 String[] nomeCliente = dr.Cells["NomeCliente"].Value.ToString().Split(' ');
 
                                 String fileNameDest = _configSM.ConfigXML.PathSource + "Enviados\\" + folderDest + "nfe_" + dr.Cells["NF"].Value.ToString() + "_" + nomeCliente[0] + ".xml";
-                                //String toName = dr.Cells["EmailCliente"].Value.ToString();
-                                String toName = "mcellobb@gmail.com";
+                                String fileDANFENameDest = _configSM.ConfigXML.PathSource + "Enviados\\" + folderDest + "nfe_" + dr.Cells["NF"].Value.ToString() + "_" + nomeCliente[0] + ".pdf";
+                                String toName = dr.Cells["EmailCliente"].Value.ToString();
+                                //String toName = "mcellobb@gmail.com";
 
 
                                 if (toName.Contains("@"))
@@ -480,12 +494,14 @@ namespace SendMailNFE
                                         mmMail.CC.Add(_MAIL_CC2);
 
                                     Attachment attMail = new Attachment(fileName, MediaTypeNames.Application.Octet);
+                                    Attachment attDANFEMail = new Attachment(fileDANFE, MediaTypeNames.Application.Pdf);
 
                                     ContentDisposition ctdMail = attMail.ContentDisposition;
                                     ctdMail.CreationDate = File.GetCreationTime(fileName);
                                     ctdMail.ModificationDate = File.GetLastWriteTime(fileName);
                                     ctdMail.ReadDate = File.GetLastAccessTime(fileName);
                                     mmMail.Attachments.Add(attMail);
+                                    mmMail.Attachments.Add(attDANFEMail);
 
                                     SmtpClient smtpMail = new SmtpClient(_MAIL_SERVER);
                                     smtpMail.Port = Convert.ToInt32(_configSM.ConfigXML.MailPort);
@@ -503,7 +519,18 @@ namespace SendMailNFE
                                     if (!Directory.Exists(_configSM.ConfigXML.PathSource + "Enviados\\" + folderDest))
                                         Directory.CreateDirectory(_configSM.ConfigXML.PathSource + "Enviados\\" + folderDest);
 
-                                    File.Move(fileName, fileNameDest);
+                                    FileInfo fileInfo = new FileInfo(fileNameDest);
+                                    if (fileInfo.Exists)
+                                        fileInfo.Delete();
+                                    else
+                                        File.Move(fileName, fileNameDest);
+
+                                    FileInfo fileInfoDanfe = new FileInfo(fileDANFENameDest);
+                                    if (fileInfoDanfe.Exists)
+                                        fileInfoDanfe.Delete();
+                                    else
+                                        File.Move(fileDANFE, fileDANFENameDest);
+
                                     send++;
                                 }
                                 int percentComplete = (int)((float)send / (float)TotalItens * 100);
@@ -589,6 +616,29 @@ namespace SendMailNFE
             }
         }
 
+        /// <summary>
+        /// This method find to a DANFE PDF document that to be valid
+        /// Mail can't to be send if this document doesn't exist. It's business rule.
+        /// First here, we use the XML base to validate this infos. 
+        /// Since the name of XML file could be the same of the PDF file, this is one (but not only) way to make this check.
+        /// </summary>
+        /// <param name="xmlFileName">Name of XML file to looking for the PDF file.</param>
+        /// <param name="pathToFind">Where the PDF are stored.</param>
+        /// <param name="keyToValidate">Some string that make the PDF unique</param>
+        /// <param name="recursiveSearch">True or false recursive search</param>
+        /// <returns></returns>
+        public string FindValidDANFEPDF(string xmlFileName, string pathToFind, string keyToValidate, bool recursiveSearch = false)
+        {
+            string PDFFileName = xmlFileName.ToUpperInvariant().Replace("XML", "PDF");
+
+            FileInfo fileInfo = new FileInfo(pathToFind + PDFFileName);
+
+            if (fileInfo.Exists)
+                return fileInfo.Name;
+            else
+                return string.Empty;
+        }
+
         #endregion
 
         #region BackgroundEvents
@@ -649,6 +699,5 @@ namespace SendMailNFE
         }
 
         #endregion
-
     }
 }

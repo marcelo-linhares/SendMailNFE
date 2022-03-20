@@ -30,7 +30,7 @@
 		<MailBody>Prezado Cliente, este e-mail refere-se a Nota Fiscal Eletrônica emitida por: Losinox Ltda.</MailBody>
 		<MailServer>smtp.office365.com</MailServer>
 		<MailUser>faturamento@losinox.com.br</MailUser>
-		<MailPassword>fat@280313</MailPassword>
+		<MailPassword></MailPassword>
 		<MailFrom>faturamento@losinox.com.br</MailFrom>
 		<MailCC1></MailCC1>
 		<MailCC2></MailCC2>

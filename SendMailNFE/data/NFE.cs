@@ -16,5 +16,6 @@ namespace SendMailNFE.Data
         public string data_emissao { get; set; }
         public string codigo_NFE { get; set; }
         public bool indicador_NFE_processada { get; set; }
+        public bool indicador_DANFE_PDF_valido { get; set; }
     }
 }

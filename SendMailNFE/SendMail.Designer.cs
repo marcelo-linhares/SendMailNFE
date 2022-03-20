@@ -135,6 +135,7 @@ namespace SendMailNFE
             this.sobreToolStripMenuItem.Name = "sobreToolStripMenuItem";
             this.sobreToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.sobreToolStripMenuItem.Text = "&Sobre";
+            this.sobreToolStripMenuItem.Click += new System.EventHandler(this.sobreToolStripMenuItem_Click);
             // 
             // manualDoSistemaToolStripMenuItem
             // 
@@ -191,6 +192,7 @@ namespace SendMailNFE
             // 
             // lblpgbMain
             // 
+            this.lblpgbMain.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblpgbMain.AutoSize = true;
             this.lblpgbMain.Location = new System.Drawing.Point(430, 36);
             this.lblpgbMain.Name = "lblpgbMain";
@@ -200,6 +202,7 @@ namespace SendMailNFE
             // 
             // pgbMail
             // 
+            this.pgbMail.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pgbMail.Location = new System.Drawing.Point(305, 16);
             this.pgbMail.Name = "pgbMail";
             this.pgbMail.Size = new System.Drawing.Size(325, 17);
@@ -259,7 +262,7 @@ namespace SendMailNFE
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mnuSendMailNFE;
             this.Name = "SendMail";
-            this.Text = "Send Mail NFE - ComMarc Soluções em Informática";
+            this.Text = "Send Mail NFE - ComMarc Software Solution";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SendMail_FormClosing);
             this.Load += new System.EventHandler(this.SendMail_Load);

@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SendMailNFE")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("SendMail NFE is a opensource software made by Commarc Software Solution, to help us to solve one of NFE needs. Contact me by mlinharesdev@gmail.com to help improve this simple software. I will love to know what you think about it.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("commarc")]
+[assembly: AssemblyCompany("Commarc")]
 [assembly: AssemblyProduct("SendMailNFE")]
-[assembly: AssemblyCopyright("Copyright © commarc 2009")]
+[assembly: AssemblyCopyright("Copyright © Commarc 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
